@@ -24,7 +24,7 @@ class Config(Entity):
     """
 
     def __init__(self , name:str="", description:str="", simaVersion:str="",
-        phases:list[Phase]=None, **kwargs):
+        phases:List[Phase]=None, **kwargs):
         self.__name = name
         self.__description = description
         self.__simaVersion = simaVersion

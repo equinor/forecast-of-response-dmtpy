@@ -25,8 +25,8 @@ class ResultFile(Entity):
     """
 
     def __init__(self , name:str="", description:str="", 
-        variableRuns:list[VariableRun]=None, 
-        comparisonGroups:list[ComparisonGroups]=None,**kwargs):
+        variableRuns:List[VariableRun]=None, 
+        comparisonGroups:List[ComparisonGroups]=None,**kwargs):
         self.__name = name
         self.__description = description
         self.__variableRuns = list() if variableRuns is None else variableRuns

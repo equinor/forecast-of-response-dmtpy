@@ -22,7 +22,7 @@ class Response(Entity):
     """
 
     def __init__(self , name:str="", description:str="",
-        statistics:list[Timeseries]=None,
+        statistics:List[Timeseries]=None,
         **kwargs):
         self.__name = name
         self.__description = description

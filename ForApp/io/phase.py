@@ -33,9 +33,9 @@ class Phase(Entity):
     """
 
     def __init__(self , name:str="", description:str="",
-        simulationConfigs:list[SimulationConfig]=None, start:str="",
+        simulationConfigs:List[SimulationConfig]=None, start:str="",
         workflowTask:str="", end:str="", status:str='Upcoming',
-        defaultVariables:list[Variable]=None, **kwargs):
+        defaultVariables:List[Variable]=None, **kwargs):
         self.__name = name
         self.__description = description
         self.__simulationConfigs = list() if simulationConfigs is None else simulationConfigs

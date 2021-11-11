@@ -32,7 +32,7 @@ class Timeseries(Entity):
 
     def __init__(
         self , name:str="", description:str="", 
-        datetimes:list[str]=None, values:list[float]=None,
+        datetimes:List[str]=None, values:List[float]=None,
         unit:str="", plotType:PlotTypes=PlotTypes.line, **kwargs):
         self.__name = name
         self.__description = description

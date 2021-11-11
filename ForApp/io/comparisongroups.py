@@ -22,7 +22,7 @@ class ComparisonGroups(Entity):
     """
 
     def __init__(self , name:str="", description:str="",
-        parameterVariations:list[ParameterVariations]=None, **kwargs):
+        parameterVariations:List[ParameterVariations]=None, **kwargs):
         self.__name = name
         self.__description = description
         self.__parameterVariations = list() if parameterVariations is None else parameterVariations

@@ -28,7 +28,7 @@ class SimulationConfig(Entity):
 
     def __init__(
         self , name:str="", description:str="", 
-        variables:list[Variable]=None, simulations:list[Simulation]=None,
+        variables:List[Variable]=None, simulations:List[Simulation]=None,
         published:bool=False, **kwargs):
         self.__name = name
         self.__description = description
