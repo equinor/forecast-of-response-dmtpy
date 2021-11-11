@@ -1,0 +1,7 @@
+version: "3.4"
+
+services:
+  ForApp:
+    build:
+      context: .
+    image: ForApp:latest

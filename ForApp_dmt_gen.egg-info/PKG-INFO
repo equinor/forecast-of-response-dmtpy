@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: ForApp-dmt-gen
+Version: 0.1.0
+Summary: Model accessor package for ForApp
+Home-page: UNKNOWN
+Author: UNKNOWN
+License: UNKNOWN
+Description: Runtime library used to create and interact with Python entities
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: UNKNOWN
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
