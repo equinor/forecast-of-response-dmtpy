@@ -26,7 +26,7 @@ class VariableRun(Entity):
 
     def __init__(
         self , name:str="", description:str="", 
-        response: list[Response]=None, variables: list[Variable]=None,
+        response: List[Response]=None, variables: List[Variable]=None,
         **kwargs):
         self.__name = name
         self.__description = description
