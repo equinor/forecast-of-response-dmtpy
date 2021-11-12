@@ -4,9 +4,11 @@
 from dmt.entity import Entity
 from dmt.blueprint import Blueprint
 from .blueprints.simulationconfig import SimulationConfigBlueprint
-from typing import Dict,Sequence,List
+from typing import Dict,Sequence,List,Optional, Union
 from ForApp.io.variable import Variable
 from ForApp.io.simulation import Simulation
+from ForApp.io.variablerun import VariableRun
+import copy, itertools
 
 class SimulationConfig(Entity):
     """
@@ -99,3 +101,39 @@ class SimulationConfig(Entity):
     def published(self, value: bool):
         """Set published"""
         self.__published = bool(value)
+
+
+    def get(self, name:Optional[str]=None, delimiter:str=';') -> Union[List[VariableRun],str]:
+        """Reads the variables on the simulationconfig and checks if the value of 
+        the variable is an array of values delimited by ';' (default). The delimiter should
+        correspond to the value used in the forecast of response front end.
+        
+        For all permutations of variables the function returns a list of type 
+        VariableRun. If a specific variable is known to be unchanged between variableruns, 
+        the variable name can be specified to return just the value of that variable
+
+        Args:
+            name (Optional[str], optional): variable name. Defaults to None.
+            delimiter (str, optional): delimiter for value arrays. Defaults to ';'.
+
+        Returns:
+            Union[List[VariableRun],str]: [description]
+        """
+        cast = {'string':str, 'number':float, 'integer':int, 'bool': bool}
+        iterables, variableRuns = [], []
+        for variable in self.variables:
+            iterables.append([cast[variable.valueType](var) for var in variable.value.split(delimiter)])
+        for ivar, variable_values in enumerate(itertools.product(*iterables)):       
+            variables = copy.deepcopy(self.variables)
+            for variable, value in zip(variables, variable_values):
+                variable.value = value # should perhaps keep as str?
+            variableRuns.append(
+                VariableRun(
+                    name=f"VariableRun{ivar+1}",
+                    variables=variables
+                )    
+            )
+        if name is None: return variableRuns
+        else: return [variable.value for variable in variableRuns[0].variables 
+                            if variable.name == name][0]
+    

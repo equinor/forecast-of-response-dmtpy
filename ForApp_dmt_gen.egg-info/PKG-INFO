@@ -5,7 +5,10 @@ Summary: Model accessor package for ForApp
 Home-page: UNKNOWN
 Author: UNKNOWN
 License: UNKNOWN
-Description: Runtime library used to create and interact with Python entities
+Description: # Forecast of response dmtpy
+        
+        A python library used to create and interact with dmt entities used with [forecast-of-response-dmt](https://github.com/equinor/forecast-of-response-dmt)
+        
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: UNKNOWN
