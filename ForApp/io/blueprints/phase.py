@@ -16,6 +16,7 @@ class PhaseBlueprint(Blueprint):
         self.attributes.append(BlueprintAttribute("simulationConfigs","/io/SimulationConfig","",True,Dimension("size","")))
         self.attributes.append(Attribute("start","string",""))
         self.attributes.append(Attribute("workflowTask","string",""))
+        self.attributes.append(Attribute("workflow","string",""))
         self.attributes.append(Attribute("end","string",""))
         self.attributes.append(Attribute("status","string",""))
         self.attributes.append(BlueprintAttribute("defaultVariables","/io/Variable","",True,Dimension("size","")))

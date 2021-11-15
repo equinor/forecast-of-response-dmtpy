@@ -34,13 +34,14 @@ class Phase(Entity):
 
     def __init__(self , name:str="", description:str="",
         simulationConfigs:List[SimulationConfig]=None, start:str="",
-        workflowTask:str="", end:str="", status:str='Upcoming',
+        workflowTask:str="", workflow:str="", end:str="", status:str='Upcoming',
         defaultVariables:List[Variable]=None, **kwargs):
         self.__name = name
         self.__description = description
         self.__simulationConfigs = list() if simulationConfigs is None else simulationConfigs
         self.__start = start
         self.__workflowTask = workflowTask
+        self.__workflow = workflow
         self.__end = end
         self.__status = status
         self.__defaultVariables = list() if defaultVariables is None else defaultVariables
@@ -106,6 +107,16 @@ class Phase(Entity):
     def workflowTask(self, value: str):
         """Set workflowTask"""
         self.__workflowTask = str(value)
+
+    @property
+    def workflow(self) -> str:
+        """"""
+        return self.__workflow
+
+    @workflow.setter
+    def workflow(self, value: str):
+        """Set workflow"""
+        self.__workflow = str(value)
 
     @property
     def end(self) -> str:
