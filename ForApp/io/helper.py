@@ -24,13 +24,7 @@ class EntityWriter(DMTWriter):
         with open(filename, 'w', encoding="utf-8") as fp:
             dict=self.to_dict(models)
             json.dump(dict,fp,indent=indent) 
-        if dest is not None and src is not None:
-            with open(filename, 'r', encoding="utf-8") as fp:
-                lines = [line.replace(src, dest) for line in fp.readlines()]
-            with open(filename, 'w', encoding="utf-8") as fp:
-                fp.writelines(lines)
-                
-
+        if dest is not None and src is not None: change_package_path(filename,src,dest)
             
 class EntityReader(DMTReader):
     """ Local class for reading entities """
@@ -42,16 +36,18 @@ class EntityReader(DMTReader):
         Args:
             filename (str): filename containing entity data
             src ([type], optional): Source package of blueprint. Defaults to None.
-            dest ([type], optional): Destination package of blueprint. Defaults to None.
+            dest ([type], optional): Destination package of blueprint. Defaults to ForApp/io.
 
         Returns:
             Entity: Entity
         """
-        if src is not None:
-            with open(filename, 'r', encoding="utf-8") as fp:
-                lines = [line.replace(src, dest) for line in fp.readlines()]
-            with open(filename, 'w', encoding="utf-8") as fp:
-                fp.writelines(lines)
-        with open(filename, 'r',encoding="utf-8") as file:
-            res=json.load(file)
-            return self.from_dict(res)
+        if src is not None: change_package_path(filename,src,dest)
+        with open(filename, 'r',encoding="utf-8") as file: res=json.load(file)
+        if src is not None: change_package_path(filename,dest,src)
+        return self.from_dict(res)
+        
+def change_package_path(filename, src, dest):
+    with open(filename, 'r', encoding="utf-8") as fp:
+        lines = [line.replace(src, dest) for line in fp.readlines()]
+    with open(filename, 'w', encoding="utf-8") as fp:
+        fp.writelines(lines)
