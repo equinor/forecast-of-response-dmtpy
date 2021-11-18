@@ -24,7 +24,8 @@ class EntityWriter(DMTWriter):
         with open(filename, 'w', encoding="utf-8") as fp:
             dict=self.to_dict(models)
             json.dump(dict,fp,indent=indent) 
-        if dest is not None and src is not None: change_package_path(filename,src,dest)
+        if dest is not None and src is not None: 
+            change_package_path(filename,src,dest)
             
 class EntityReader(DMTReader):
     """ Local class for reading entities """
@@ -41,10 +42,13 @@ class EntityReader(DMTReader):
         Returns:
             Entity: Entity
         """
-        if src is not None: change_package_path(filename,src,dest)
-        with open(filename, 'r',encoding="utf-8") as file: res=json.load(file)
-        if src is not None: change_package_path(filename,dest,src)
-        return self.from_dict(res)
+        with open(filename, 'r',encoding="utf-8") as fp: 
+            json_str = "\n".join(fp.readlines())
+            if src is not None: json_str = json_str.replace(src, dest)
+            res=json.loads(json_str)
+            return self.from_dict(res)
+
+        
         
 def change_package_path(filename, src, dest):
     with open(filename, 'r', encoding="utf-8") as fp:
