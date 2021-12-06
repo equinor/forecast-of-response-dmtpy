@@ -118,22 +118,38 @@ class SimulationConfig(Entity):
 
         Returns:
             Union[List[VariableRun],str]: [description]
+            
+        TODO: compile functionality for comparisonGroups / bar-plots e.g. "heading variation plots"
+                    
         """
         cast = {'string':str, 'number':float, 'integer':int, 'bool': bool}
         iterables, variableRuns = [], []
+        iterable_names = []
         for variable in self.variables:
             iterables.append([cast[variable.valueType](var) for var in variable.value.split(delimiter)])
+            # Add some default functionality for naming the variableRun based on variations/arrays
+            if delimiter in variable.value:
+                iterable_names.append([f"{variable.name}: {var} {variable.unit}" for var in variable.value.split(delimiter)]) 
+            
         for ivar, variable_values in enumerate(itertools.product(*iterables)):       
             variables = copy.deepcopy(self.variables)
             for variable, value in zip(variables, variable_values):
                 variable.value = value # should perhaps keep as str?
             variableRuns.append(
                 VariableRun(
-                    name=f"VariableRun{ivar+1}",
+                    name=f"forecast",
                     variables=variables
                 )    
             )
+        
+        # Add some default functionality for naming the variableRun based on variations/arrays
+        for ivar, variable_names in enumerate(itertools.product(*iterable_names)):    
+            variableRun_name = "forecast [" + ', '.join(variable_names) + "]"
+            variableRuns[ivar].name = variableRun_name
+            
         if name is None: return variableRuns
         else: return [variable.value for variable in variableRuns[0].variables 
                             if variable.name == name][0]
     
+    
+        
