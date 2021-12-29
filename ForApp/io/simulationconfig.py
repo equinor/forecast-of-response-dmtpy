@@ -102,6 +102,7 @@ class SimulationConfig(Entity):
         """Set published"""
         self.__published = bool(value)
 
+    def _str2bool(v): return v.lower() in ("yes", "true", "t", "1") or v.lower() in "true"
 
     def get(self, name:Optional[str]=None, delimiter:str=';') -> Union[List[VariableRun],str]:
         """Reads the variables on the simulationconfig and checks if the value of 
@@ -122,7 +123,7 @@ class SimulationConfig(Entity):
         TODO: compile functionality for comparisonGroups / bar-plots e.g. "heading variation plots"
                     
         """
-        cast = {'string':str, 'number':float, 'integer':int, 'bool': bool}
+        cast = {'string':str, 'number':float, 'integer':int, 'bool': _str2bool}
         iterables, variableRuns = [], []
         iterable_names = []
         for variable in self.variables:
