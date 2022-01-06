@@ -4,7 +4,7 @@
 from dmt.entity import Entity
 from dmt.blueprint import Blueprint
 from .blueprints.variablerun import VariableRunBlueprint
-from typing import Dict,Sequence,List
+from typing import Dict,Sequence,List,Optional, Union
 from ForApp.io.response import Response
 from ForApp.io.variable import Variable
 
@@ -86,3 +86,41 @@ class VariableRun(Entity):
         if not isinstance(value, Sequence):
             raise Exception("Expected sequense, but was " , type(value))
         self.__variables = value
+
+
+    def get_variable(self, variable_name:str) -> Union[str,float,int,bool]:
+        """Returns the value of the variable
+
+        Args:
+            variable_name (str): Name of variable (variable.name)
+
+        Returns:
+            Union[str,float,int,bool]: Value of named value
+        """
+        for variable in self.variables:
+            if variable.name == variable_name: 
+                return variable.value
+        error_message = f"Variable: {variable_name} not found"
+        error_message += "\nAvailable variables: " + ", ".join([variable.name for variable in self.variables])        
+        raise(error_message)    
+
+
+    def get(self, response_name:str, statistic_name:str) -> Union[List[float],List[str],List[bool],List[int]]:
+        """Returns the timeseries values of the response statistic
+
+        Args:
+            response_name (str): Name of response
+            statistic_name (str): Name of statistic
+
+        Returns:
+            Union[List[float],List[str],List[bool],List[int]]: Values of the response statistic
+        """
+        for response in self.responses:
+            if response.name == response_name:
+                for statistic in response.statistics:
+                    if statistic.name == statistic_name:
+                        return statistic.values
+        error_message = f"Response: {response_name}, Stastistic: {statistic_name} not found"
+        error_message += "\nAvailable response: " + ", ".join([response.name for response in self.responses])        
+        raise(error_message)    
+    
